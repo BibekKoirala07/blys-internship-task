@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { setUser } from "../store/slices/userSlice";
@@ -8,7 +8,9 @@ export default function Auth() {
   const { isAuthenticated } = useSelector((state: RootState) => state.user);
   const apiUrl = useSelector((state: RootState) => state.config.apiUrl);
   const location = useLocation();
-  const view = location.pathname.includes("login") ? "login" : "register";
+  const [view, setView] = useState(
+    location.pathname.includes("login") ? "login" : "register"
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -17,6 +19,15 @@ export default function Auth() {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    setUsername("");
+    setEmail("");
+    setPassword("");
+    setError("");
+    setSuccess(false);
+    setLoading(false);
+  }, [view]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
