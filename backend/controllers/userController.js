@@ -3,8 +3,9 @@ const jwt = require("jsonwebtoken");
 const dbPool = require("../db/db");
 
 const register = async (req, res) => {
-  const { username, password } = req.body;
+  const { username, email, password } = req.body;
   try {
+    console.log("username", username, password, email);
     const userCheck = await dbPool.query(
       "SELECT * FROM users WHERE username = $1",
       [username]
@@ -13,27 +14,30 @@ const register = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const result = await db.query(
-      "INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id",
-      [username, hashedPassword]
+    const result = await dbPool.query(
+      "INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *",
+      [username, email, hashedPassword]
     );
+
+    console.log("result", result);
 
     res
       .status(201)
-      .json({ message: "User created", userId: result.rows[0].id });
+      .json({ message: "User created now login", data: result.rows[0] });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
 const login = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   try {
-    const result = await dbPool.query(
-      "SELECT * FROM users WHERE username = $1",
-      [username]
-    );
+    console.log("username", email, password);
+    const result = await dbPool.query("SELECT * FROM users WHERE email = $1", [
+      email,
+    ]);
     const user = result.rows[0];
+
     if (!user) return res.status(400).json({ message: "Invalid credentials" });
 
     const match = await bcrypt.compare(password, user.password);
@@ -43,9 +47,11 @@ const login = async (req, res) => {
       expiresIn: "1d",
     });
 
-    res
+    console.log("token", token);
+
+    return res
       .cookie("token", token, { httpOnly: true })
-      .json({ message: "Login successful" });
+      .json({ message: "Login successful", data: user });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
