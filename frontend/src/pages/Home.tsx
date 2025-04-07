@@ -58,7 +58,7 @@ const Home = () => {
         credentials: "include",
       });
 
-      const data = await response.json();
+      // const data = await response.json();
 
       // console.log("data", data);
 
