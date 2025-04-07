@@ -59,7 +59,7 @@ const login = async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(400).json({ message: "Invalid credentials" });
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ user }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
 
@@ -68,8 +68,9 @@ const login = async (req, res) => {
     return res
       .cookie("blys_token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
+        secure: true,
+        sameSite: "none",
+        maxAge: 24 * 60 * 60 * 1000,
       })
       .json({ message: "Login successful", data: user });
   } catch (err) {
