@@ -35,7 +35,7 @@ const Dashboard = () => {
       });
       const data = await response.json();
 
-      console.log("data in my home", data);
+      // console.log("data in my home", data);
 
       if (response.ok) {
         setTasks(data);
@@ -44,14 +44,14 @@ const Dashboard = () => {
       }
     } catch (err) {
       setError("Error connecting to server");
-      console.error(err);
+      // console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
   const deleteTask = async (taskId: number) => {
-    console.log("taskId", taskId);
+    // console.log("taskId", taskId);
     try {
       const response = await fetch(`${apiUrl}/tasks/${taskId}`, {
         method: "DELETE",
@@ -60,7 +60,7 @@ const Dashboard = () => {
 
       const data = await response.json();
 
-      console.log("data", data);
+      // console.log("data", data);
 
       if (response.ok) {
         setTasks(tasks.filter((task) => task.id !== taskId));
@@ -70,7 +70,7 @@ const Dashboard = () => {
       }
     } catch (err) {
       setError("Error connecting to server");
-      console.error(err);
+      // console.error(err);
     }
   };
 

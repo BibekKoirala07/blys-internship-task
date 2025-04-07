@@ -52,7 +52,7 @@ const CreateTasks = () => {
       }
     } catch (err) {
       setError("Error connecting to server");
-      console.error(err);
+      // console.error(err);
     } finally {
       setLoading(false);
     }

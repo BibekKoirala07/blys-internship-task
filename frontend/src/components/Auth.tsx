@@ -60,7 +60,7 @@ export default function Auth() {
         });
         const registerData = await registerResponse.json();
 
-        console.log("registerData", registerData);
+        // console.log("registerData", registerData);
         if (registerResponse.ok) {
           setSuccess(registerData.message);
         }
