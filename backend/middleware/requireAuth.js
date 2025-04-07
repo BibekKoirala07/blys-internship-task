@@ -14,6 +14,8 @@ const requireAuth = (req, res, next) => {
 
     req.user = decoded;
 
+    console.log("req.user", req.user);
+
     next();
   } catch (err) {
     return res.status(403).json({ message: "Invalid or expired token" });
