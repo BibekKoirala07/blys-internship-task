@@ -10,7 +10,7 @@ const getTasks = async (req, res) => {
 };
 
 const getMyTasks = async (req, res) => {
-  const userId = req.user.id;
+  const userId = req.user.user.id;
 
   try {
     const result = await dbPool.query(
@@ -24,7 +24,7 @@ const getMyTasks = async (req, res) => {
 };
 
 const createTask = async (req, res) => {
-  const userId = req.user.id;
+  const userId = req.user.user.id;
   const { title, description } = req.body;
 
   try {
@@ -39,7 +39,7 @@ const createTask = async (req, res) => {
 };
 
 const removeTask = async (req, res) => {
-  const userId = req.user.id;
+  const userId = req.user.user.id;
   const taskId = req.params.id;
 
   try {
