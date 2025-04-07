@@ -6,7 +6,7 @@ interface ConfigState {
 }
 
 const initialState: ConfigState = {
-  apiUrl: "http://localhost:80", // default API URL
+  apiUrl: import.meta.env.VITE_BACKEND_URL,
 };
 
 const configSlice = createSlice({
