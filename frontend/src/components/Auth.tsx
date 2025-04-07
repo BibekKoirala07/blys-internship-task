@@ -29,6 +29,13 @@ export default function Auth() {
     setLoading(false);
   }, [view]);
 
+  useEffect(() => {
+    const currentView = location.pathname.includes("login")
+      ? "login"
+      : "register";
+    setView(currentView);
+  }, [location.pathname]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === "username") {
