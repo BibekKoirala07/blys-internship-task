@@ -16,14 +16,16 @@ const Home = () => {
   const { isAuthenticated, userData } = useSelector(
     (state: RootState) => state.user
   );
+
+  console.log("userData", userData);
   const apiUrl = useSelector((state: RootState) => state.config.apiUrl);
 
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  console.log("tasks", tasks);
   useEffect(() => {
-    // Fetch tasks for all users, regardless of authentication
     fetchTasks();
   }, []);
 

@@ -49,7 +49,7 @@ export default function Auth() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", { username, email, password });
+    // console.log("Form submitted:", { username, email, password });
     try {
       setLoading(true);
       if (view === "register") {
@@ -72,7 +72,7 @@ export default function Auth() {
           credentials: "include",
         });
         const loginData = await loginResponse.json();
-        console.log("login", loginData);
+        // console.log("login", loginData);
         if (loginResponse.ok) {
           setSuccess(true);
           dispatch(setUser(loginData.data));

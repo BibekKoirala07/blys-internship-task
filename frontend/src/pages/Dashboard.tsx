@@ -24,11 +24,8 @@ const Dashboard = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // Fetch tasks for all users, regardless of authentication
     fetchTasks();
   }, []);
-
-  console.log("apiUrl", apiUrl);
 
   const fetchTasks = async () => {
     try {
