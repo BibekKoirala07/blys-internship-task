@@ -50,7 +50,11 @@ const login = async (req, res) => {
     console.log("token", token);
 
     return res
-      .cookie("token", token, { httpOnly: true })
+      .cookie("blys_token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+      })
       .json({ message: "Login successful", data: user });
   } catch (err) {
     res.status(500).json({ message: err.message });

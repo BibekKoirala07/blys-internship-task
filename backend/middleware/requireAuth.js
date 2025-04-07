@@ -1,11 +1,10 @@
 const jwt = require("jsonwebtoken");
 
 const requireAuth = (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.cookies["blys_token"];
 
-  console.log("req.cookies", req.cookies);
+  console.log("req.cookies", token);
 
-  // If no token is found, respond with Unauthorized status
   if (!token) {
     return res.status(401).json({ message: "Unauthorized" });
   }
