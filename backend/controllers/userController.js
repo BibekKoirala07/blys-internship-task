@@ -5,7 +5,19 @@ const dbPool = require("../db/db");
 const register = async (req, res) => {
   const { username, email, password } = req.body;
   try {
-    console.log("username", username, password, email);
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+    if (username.length < 3) {
+      return res
+        .status(400)
+        .json({ message: "Username must be at least 3 characters long" });
+    }
+    if (password.length < 8) {
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 8 characters long" });
+    }
     const userCheck = await dbPool.query(
       "SELECT * FROM users WHERE username = $1",
       [username]
@@ -32,7 +44,11 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   const { email, password } = req.body;
   try {
-    console.log("username", email, password);
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
+    }
     const result = await dbPool.query("SELECT * FROM users WHERE email = $1", [
       email,
     ]);

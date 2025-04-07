@@ -27,7 +27,6 @@ const createTask = async (req, res) => {
   const userId = req.user.id;
   const { title, description } = req.body;
 
-  console.log("userrId", userId, title, description);
   try {
     await dbPool.query(
       "INSERT INTO tasks (user_id, title, description) VALUES ($1, $2, $3)",
@@ -43,7 +42,6 @@ const removeTask = async (req, res) => {
   const userId = req.user.id;
   const taskId = req.params.id;
 
-  console.log("uesrId", userId, taskId);
   try {
     await dbPool.query("DELETE FROM tasks WHERE id = $1 AND user_id = $2", [
       taskId,
